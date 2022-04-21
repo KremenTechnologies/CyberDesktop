@@ -48,8 +48,8 @@ class Settings:
 
 
 class Exchange:
-    def __init__(self, api_url: str):
-        self.api_url = api_url
+    def __init__(self):
+        self.api_url = "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json"
         self.exchange = {}
 
     def __fetch_data(self) -> None:
@@ -60,6 +60,8 @@ class Exchange:
             self.__fetch_data()
         except Exception as e:
             print(e)
+            return {}
+
         _usd_exchange = 0.00
         _euro_exchange = 0.00
 
@@ -70,6 +72,29 @@ class Exchange:
                 _euro_exchange = currency['rate']
 
         return {'usd': _usd_exchange, 'euro': _euro_exchange}
+
+
+class Weather:
+    def __init__(self, city_id: int, api_key: str):
+        self.url = f"https://api.openweathermap.org/data/2.5/weather?id={city_id}&units=metric&lang=ru&appid={api_key}"
+        self.data = None
+
+    def __fetch_data(self):
+        self.data = httpx.get(self.url).json()
+
+    def get(self):
+        try:
+            self.__fetch_data()
+        except Exception as e:
+            print(e)
+            return {}
+
+        return {
+            'city': self.data['name'],
+            'weather': self.data['weather'][0]['description'],
+            'temp': self.data['main']['temp'],
+            'wind': self.data['wind']['speed']
+        }
 
 
 class ImageBuilder:
@@ -89,8 +114,8 @@ class ImageBuilder:
 
     def draw_underline(self, text_coords: tuple, color: tuple) -> None:
         self.draw.line(
-            (min(text_coords[0], text_coords[0]), text_coords[3] + 24,
-             max(text_coords[2], text_coords[2]), text_coords[3] + 24),
+            (text_coords[0], text_coords[3] + 20,
+             text_coords[2], text_coords[3] + 20),
             width=8, fill=color
         )
 

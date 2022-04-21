@@ -1,13 +1,8 @@
 {
   "weather_api": {
-    "url": "",
     "token": "0897d92bdbd622cdc79789b730c98a9",
-    "cities": {
-      "704147": "Кременчуг"
-    },
-    "choice_city": "704147"
+    "city_id": "704147"
   },
-  "exchange_api_url": "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json",
   "themes": [
     {
       "bg": "#131313",
