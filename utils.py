@@ -75,8 +75,8 @@ class Exchange:
 
 
 class Weather:
-    def __init__(self, city_id: int, api_key: str):
-        self.url = f"https://api.openweathermap.org/data/2.5/weather?id={city_id}&units=metric&lang=ru&appid={api_key}"
+    def __init__(self, city_id: int, api_key: str, locale: str = 'en'):
+        self.url = f"https://api.openweathermap.org/data/2.5/weather?id={city_id}&units=metric&lang={locale.split('_')[0]}&appid={api_key}"
         self.data = None
 
     def __fetch_data(self):

@@ -1,4 +1,5 @@
 import datetime
+import locale
 import os
 import time
 
@@ -9,10 +10,13 @@ from utils import ImageBuilder, days, Exchange, change_wallpaper, Settings, Weat
 if __name__ == '__main__':
     wei, hei = GetSystemMetrics(0), GetSystemMetrics(1)
     center_w, center_h = wei/2, hei/2
-
     theme = {'bg': (19, 19, 19), 'fg': (152, 0, 2), 'text': (255, 191, 0)}
 
     settings = Settings()
+
+    locale_lang = settings.get('locale')
+    locale.setlocale(locale.LC_ALL, f"{locale_lang}.UTF-8")
+
     current_m = -1
     while True:
         now_m = datetime.datetime.now().minute
@@ -23,7 +27,7 @@ if __name__ == '__main__':
 
             # Top center block
             weather_settings = settings.get('weather_api')
-            weather = Weather(city_id=weather_settings['city_id'], api_key=weather_settings['token']).get()
+            weather = Weather(city_id=weather_settings['city_id'], api_key=weather_settings['token'], locale=locale_lang).get()
             if weather:
                 weather_city_coords = image.add_text(center_w, 20, f"{weather['city']}", color=theme['text'], font=ImageBuilder.font(35))
                 weather_coords = image.add_text(
@@ -35,8 +39,7 @@ if __name__ == '__main__':
 
             # Center Block
             center_block_y_offset = -75
-
-            today = days[datetime.datetime.today().isoweekday() - 1]
+            today = datetime.datetime.now().strftime("%A")
             today_coords = image.add_text(center_w, center_h - 100 + center_block_y_offset, today, ImageBuilder.font(85), color=theme['text'])
 
             underline_coord = today_coords
