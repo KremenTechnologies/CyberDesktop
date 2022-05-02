@@ -1,6 +1,6 @@
 {
   "weather_api": {
-    "token": "0897d92bdbd622cdc79789b730c98a9",
+    "token": "0897d92bdbd622cdc79789b730c98a9d",
     "city_id": "704147"
   },
   "themes": [
@@ -10,6 +10,6 @@
       "text": "#ffbf00"
     }
   ],
-  "locale": "ru_RU",
+  "locale": "en_US",
   "EXAMPLE_LANGS": ["en_US", "uk_UA","ru_RU"]
 }

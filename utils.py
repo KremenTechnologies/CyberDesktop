@@ -110,7 +110,7 @@ class ImageBuilder:
 
     @staticmethod
     def font(size: int = 50):
-        return ImageFont.truetype(f'fonts/capture-it.ttf', size=size)
+        return ImageFont.truetype(f'resources/fonts/capture-it.ttf', size=size)
 
     def draw_underline(self, text_coords: tuple, color: tuple) -> None:
         self.draw.line(
@@ -126,5 +126,5 @@ class ImageBuilder:
 
         return xx, yy, xx + text_w, yy + text_h
 
-    def save(self):
-        self.img.save('image.png')
+    def save(self, image: str):
+        self.img.save(image)

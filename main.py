@@ -66,7 +66,9 @@ if __name__ == '__main__':
                 text=str_ram, font=ImageBuilder.font(24), color=theme['text']
             )
             # Bottom Center Block
-            image.save()
-            change_wallpaper(os.getcwd() + "\\image.png")
+            relative_image_path = "resources\\wallpaper\\image.png"
+
+            image.save(image=relative_image_path)
+            change_wallpaper(os.getcwd() + "\\" + relative_image_path)
 
         time.sleep(1)
