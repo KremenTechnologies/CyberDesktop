@@ -3,3 +3,4 @@ Pillow==9.1.0
 pypiwin32~=223
 pywin32~=303
 httpx~=0.22.0
+psutil~=5.9.0
