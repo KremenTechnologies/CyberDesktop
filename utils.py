@@ -103,6 +103,9 @@ class ImageBuilder:
     def font(size: int = 50):
         return ImageFont.truetype(f"resources/fonts/capture-it.ttf", size=size)
 
+    def get_text_size(self, text: str, font: ImageFont):
+        return self.draw.textsize(text, font)
+
     def draw_underline(self, text_coords: tuple, color: tuple) -> None:
         self.draw.line(
             (text_coords[0], text_coords[3] + 20, text_coords[2], text_coords[3] + 20),
