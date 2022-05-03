@@ -2,14 +2,14 @@ import datetime
 import locale
 import os
 import time
+import psutil
 
-import psutil as psutil
 from win32api import GetSystemMetrics
-from utils import ImageBuilder, days, Exchange, change_wallpaper, Settings, Weather
+from utils import ImageBuilder, Exchange, change_wallpaper, Settings, Weather
 
 if __name__ == "__main__":
-    wei, hei = GetSystemMetrics(0), GetSystemMetrics(1)
-    center_w, center_h = wei / 2, hei / 2
+    width, height = GetSystemMetrics(0), GetSystemMetrics(1)
+    center_w, center_h = width / 2, height / 2
     theme = {"bg": (19, 19, 19), "fg": (152, 0, 2), "text": (255, 191, 0)}
 
     settings = Settings()
@@ -23,7 +23,7 @@ if __name__ == "__main__":
         if current_m != now_m:
             print("Minute changed...")
             current_m = now_m
-            image = ImageBuilder(wei, hei, bg=theme["bg"])
+            image = ImageBuilder(width, height, bg=theme["bg"])
 
             # Top center block
             weather_settings = settings.get("weather_api")
@@ -99,7 +99,7 @@ if __name__ == "__main__":
             str_ram = f"CPU: {cpu}% | RAM: {(ram[3]/1024/1024/1024):.1f}/{ram[0]/1024/1024/1024:.1f} GB | {ram[2]}%"
             stat_coords = image.add_text(
                 center_w,
-                hei - 60,
+                height - 60,
                 text=str_ram,
                 font=ImageBuilder.font(24),
                 color=theme["text"],
