@@ -114,13 +114,29 @@ class ImageBuilder:
         )
 
     def add_text(
-        self, x: int, y: int, text: str, font: ImageFont, color: tuple = (255, 255, 255)
+        self,
+        x: int,
+        y: int,
+        text: str,
+        font: ImageFont,
+        color: tuple = (255, 255, 255),
+        in_box: bool = False,
+        in_box_padding: int = 5,
     ) -> tuple:
         text_w, text_h = self.draw.textsize(text, font)
         xx, yy = x - text_w / 2, y - text_h / 2
         self.draw.text((xx, yy), text, font=font, fill=color)
+        box_coords = ((0, 0), (0, 0))
+        if in_box:
+            self.draw.rectangle(
+                box_coords := (
+                    (xx - in_box_padding, yy - in_box_padding),
+                    (x + text_w / 2 + in_box_padding, y + text_h / 2 + in_box_padding),
+                ),
+                outline="green",
+            )
 
-        return xx, yy, xx + text_w, yy + text_h
+        return xx, yy, xx + text_w, yy + text_h, box_coords
 
     def save(self, image: str):
         self.img.save(image)
