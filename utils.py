@@ -122,6 +122,8 @@ class ImageBuilder:
         color: tuple = (255, 255, 255),
         in_box: bool = False,
         in_box_padding: int = 5,
+        in_box_width: int = 2,
+        in_box_outline_color: str = "green",
     ) -> tuple:
         text_w, text_h = self.draw.textsize(text, font)
         xx, yy = x - text_w / 2, y - text_h / 2
@@ -133,7 +135,8 @@ class ImageBuilder:
                     (xx - in_box_padding, yy - in_box_padding),
                     (x + text_w / 2 + in_box_padding, y + text_h / 2 + in_box_padding),
                 ),
-                outline="green",
+                outline=in_box_outline_color,
+                width=in_box_width,
             )
 
         return xx, yy, xx + text_w, yy + text_h, box_coords
