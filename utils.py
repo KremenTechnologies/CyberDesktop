@@ -143,3 +143,7 @@ class ImageBuilder:
 
     def save(self, image: str):
         self.img.save(image)
+
+
+def in_coords(xy: tuple, box: tuple):
+    return box[0][0] <= xy[0] <= box[1][0] and box[0][1] <= xy[1] <= box[1][1]
