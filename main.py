@@ -1,13 +1,16 @@
-import datetime
-import locale
 import os
 import time
+import locale
 import psutil
+import datetime
+import win32api
+import win32gui
 
 from win32api import GetSystemMetrics
 from utils import ImageBuilder, Exchange, change_wallpaper, Settings, Weather
 
-if __name__ == "__main__":
+
+def main():
     width, height = GetSystemMetrics(0), GetSystemMetrics(1)
     center_w, center_h = width / 2, height / 2
     theme = {"bg": (19, 19, 19), "fg": (152, 0, 2), "text": (255, 191, 0)}
@@ -111,3 +114,43 @@ if __name__ == "__main__":
             change_wallpaper(os.getcwd() + "\\" + relative_image_path)
 
         time.sleep(1)
+
+
+if __name__ == "__main__":
+    main()
+
+exit()
+# Future update logic
+
+pressed = False
+used = False
+current_m = -1
+
+while True:
+    now_m = datetime.datetime.now().minute
+    if win32api.GetKeyState(0x01) < -1 and not pressed:
+        pressed = True
+        print('CLICK DOWN ', pressed, win32api.GetKeyState(0x01))
+    elif win32api.GetKeyState(0x01) > -1 and pressed:
+        pressed = False
+        used = False
+        print('CLICK UP ', pressed, win32api.GetKeyState(0x01))
+
+    new_click_up = not pressed and not used
+    new_minute = current_m != now_m
+
+    if new_minute:
+        main()  # UPDATE IMAGE
+
+    if new_click_up:
+        used = True
+
+        focus = win32gui.GetWindowText(win32gui.GetForegroundWindow())
+        if focus in ('Program Manager', ''):
+            x, y = win32api.GetCursorPos()
+            print('FOCUS', x, y)
+
+            # main()  # UPDATE IMAGE
+            time.sleep(0.01)
+
+    time.sleep(0.01)
