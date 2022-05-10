@@ -4,12 +4,9 @@
     "city_id": "704147"
   },
   "themes": [
-    {
-      "bg": "#131313",
-      "fg": "#980002",
-      "text": "#ffbf00"
-    }
+    {"bg": [19, 19, 19], "fg": [152, 0, 2], "text": [255, 191, 0]}
   ],
   "locale": "en_US",
-  "EXAMPLE_LANGS": ["en_US", "uk_UA","ru_RU"]
+  "EXAMPLE_LANGS": ["en_US", "uk_UA","ru_RU"],
+  "wallpaper_path": ["resources", "wallpaper", "image.png"]
 }

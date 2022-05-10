@@ -31,13 +31,19 @@ def change_wallpaper(path: str):
 class Settings:
     def __init__(self):
         self.file = "settings.json"
-        self.__load_file()
+        self.__load()
 
-    def __load_file(self):
+    def __load(self):
         self.data = json.load(open(self.file, "rb"))
+
+    def __save(self):
+        json.dump(open(self.file, "w"), self.data)
 
     def get(self, key: str):
         return self.data.get(key)
+
+    def get_dict(self):
+        return self.data
 
 
 class Exchange:

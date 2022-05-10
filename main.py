@@ -1,3 +1,4 @@
+import json
 import os
 import time
 import locale
@@ -8,6 +9,41 @@ import win32gui
 
 from win32api import GetSystemMetrics
 from utils import ImageBuilder, Exchange, change_wallpaper, Settings, Weather
+
+
+class Theme:
+    def __init__(self, settings: Settings, theme_id: int = 0):
+        self.colors = settings.get("themes")[theme_id]
+
+
+class Screen:
+    def __init__(self):
+        self.width, self.height = GetSystemMetrics(0), GetSystemMetrics(1)
+        self.center_w, self.center_h = self.width / 2, self.height / 2
+
+
+class Builder:
+    def __init__(self):
+        self.screen = Screen()
+        self._reload_components(settings=True, theme=True)
+        self.__set_locale()
+
+    def _reload_components(self, settings: bool = False, theme: bool = False):
+        if settings:
+            self.settings = Settings()
+            self.wallpaper_path = os.path.join(*self.settings.get("wallpaper_path"))
+            self.__set_locale()
+        if theme:
+            self.theme = Theme(settings=self.settings, theme_id=0)
+            self.image = ImageBuilder(self.screen.width, self.screen.height, bg=self.theme.colors["bg"])
+
+    def __set_locale(self):
+        locale_lang = self.settings.get("locale")
+        locale.setlocale(locale.LC_ALL, f"{locale_lang}.UTF-8")
+
+    def __build(self):
+        self.image.save(image=self.wallpaper_path)
+        change_wallpaper(self.wallpaper_path)
 
 
 def main():
@@ -108,6 +144,23 @@ def main():
                 color=theme["text"],
             )
             # Bottom Center Block
+
+            # # Right block
+            # current_lang = locale_lang.split("_")[0].upper()
+            # change_style_btn = image.add_text(
+            #     width - 5 - image.get_text_size(text=current_lang, font=ImageBuilder.font(24))[0],
+            #     height - 60,
+            #     text=current_lang,
+            #     font=ImageBuilder.font(24),
+            #     color=theme["text"],
+            #     in_box=True,
+            #     in_box_padding=6
+            # )
+            # # Right block
+            # xxx = width - 5 - image.get_text_size(text=current_lang, font=ImageBuilder.font(24))[0]
+            # yyy = height - 60
+            # print(in_coords(xy=(width, height), box=change_style_btn[4]))
+            # SAVE AND APPLY
             relative_image_path = "resources\\wallpaper\\image.png"
 
             image.save(image=relative_image_path)
